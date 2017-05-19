@@ -1,13 +1,109 @@
+version: '2'
+services:
 
-owncloud:
-  container_name: owncloud
-  image: owncloud
-  ports:
-   - 0.0.0.0:999:999
-  links:
-   - postgres:owncloud-db
+  postgres:
+    restart: on-failure:10
+    image: postgres
+    expose:
+      - "5432"
+    environment:
+#      - POSTGRES_DB=intriguedb
+      -POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+    volumes_from:
+      - postgres-data
 
-postgres:
-  image: postgres
-  environment:
-    - POSTGRES_PASSWORD=mysecretpassword
+  postgres-data:
+    image: postgres
+  # This is a data container, so we want to exit as soon as the container is created
+    command: /bin/true
+    volumes:
+      - /etc/postgresql
+      - /var/lib/postgresql
+
+  redis:
+    image: redis
+    expose:
+      - "6379"
+
+###########
+
+ 
+
+#  intrigue:
+#    build:
+#      context: ./intrigue-core
+#    ports:
+#      - "83:7777"
+
+#  pereval-dash: #fail, built
+#     build: 
+#       context: ./pereval-dash
+#     ports:
+#       - "80:9090" 
+
+  openwebspider: #check
+    image: pantyusha/openwebspider
+    ports:
+      - "81:9999"
+
+  cyberchef: #check
+    image: mpepping/cyberchef
+    ports:
+      - "82:8000"  
+
+#  intrigue-web:
+#    build: https://github.com/pereval-team/intrigue-core.git
+#    ports:
+#      - "83:7777"
+#    links:
+#      - redis
+#      - postgres
+#    environment:
+#      - INTRIGUE_ENV=docker
+#      - REDIS_URI=redis://redis:6379/
+
+  wisemapping: #fail
+    image: wisemapping/webapp
+    ports:
+      - "84:8090"
+
+  spiderfoot: #check
+    build: 
+       context: ./spiderfoot
+    ports:
+      - "85:8080"
+
+  etherpad: #check
+    build:
+      context: etherpad-lite
+    ports:
+      - "88:9001"
+
+
+  ethercalc: #check
+    build:
+      context: ./ethercalc
+    ports:
+      - "89:9080"
+  
+  owncloud: #installs #fail
+    image: owncloud
+    ports:
+      - 86:86
+    links:
+      - postgres:owncloud-db
+  
+  owncloud-data:
+    image: owncloud
+  # This is a data container, so we want to exit as soon as the container is created
+  # BUT we will have to fix permissions issues first (33 is the ID of the www-data user)
+    command: /bin/bash -c "/bin/chown -R 33 /var/www/html/data && /bin/chown -R 33 /var/www/html/config"
+    volumes:
+      - /var/www/html/data
+      - /var/www/html/config
+
+volumes:
+  db-data:
