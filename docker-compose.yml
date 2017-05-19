@@ -8,7 +8,6 @@ services:
       - "5432"
     environment:
 #      - POSTGRES_DB=intriguedb
-      -POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=mysecretpassword
     volumes:
       - "db-data:/var/lib/postgresql/data"
@@ -38,11 +37,11 @@ services:
 #    ports:
 #      - "83:7777"
 
-#  pereval-dash: #fail, built
-#     build: 
-#       context: ./pereval-dash
-#     ports:
-#       - "80:9090" 
+  pereval-dash: #fail, built
+     build: 
+       context: ./pereval-dash
+     ports:
+       - "80:9090" 
 
   openwebspider: #check
     image: pantyusha/openwebspider
