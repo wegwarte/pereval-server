@@ -7,20 +7,9 @@ services:
     expose:
       - "5432"
     environment:
-#      - POSTGRES_DB=intriguedb
-      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_DB=intriguedb
     volumes:
       - "db-data:/var/lib/postgresql/data"
-    volumes_from:
-      - postgres-data
-
-  postgres-data:
-    image: postgres
-  # This is a data container, so we want to exit as soon as the container is created
-    command: /bin/true
-    volumes:
-      - /etc/postgresql
-      - /var/lib/postgresql
 
   redis:
     image: redis
@@ -28,32 +17,8 @@ services:
       - "6379"
 
 ###########
-
- 
-
-#  intrigue:
-#    build:
-#      context: ./intrigue-core
-#    ports:
-#      - "83:7777"
-
-  pereval-dash: #fail, built
-     build: 
-       context: ./pereval-dash
-     ports:
-       - "80:9090" 
-
-  openwebspider: #check
-    image: pantyusha/openwebspider
-    ports:
-      - "81:9999"
-
-  cyberchef: #check
-    image: mpepping/cyberchef
-    ports:
-      - "82:8000"  
-
-#  intrigue-web:
+#TODO change the git link from pereval to original
+#  intrigue-web: #check
 #    build: https://github.com/pereval-team/intrigue-core.git
 #    ports:
 #      - "83:7777"
@@ -64,45 +29,54 @@ services:
 #      - INTRIGUE_ENV=docker
 #      - REDIS_URI=redis://redis:6379/
 
-  wisemapping: #fail
-    image: wisemapping/webapp
+  dashboard: #rebind
+     build: 
+       context: ./pereval-dash
+     ports:
+       - "86:86" 
+
+#  cyberchef: 
+#    image: mpepping/cyberchef
+#    ports:
+#      - "82:8000"  
+
+  openwebspider:
+    image: pantyusha/openwebspider
     ports:
-      - "84:8090"
+      - "81:9999"
 
   spiderfoot: #check
     build: 
        context: ./spiderfoot
     ports:
-      - "85:8080"
+      - "85:5001"
+
+#  wisemapping: #check
+#    image: wisemapping/webapp
+#    ports:
+#      - "84:8080"
 
   etherpad: #check
     build:
-      context: etherpad-lite
+      context: ./etherpad-lite
     ports:
       - "88:9001"
 
+########## FILE MANAGING ############
 
-  ethercalc: #check
+  nextcloud: 
     build:
-      context: ./ethercalc
+      context: ./nextcloud
     ports:
-      - "89:9080"
-  
-  owncloud: #installs #fail
-    image: owncloud
-    ports:
-      - 86:86
-    links:
-      - postgres:owncloud-db
-  
-  owncloud-data:
-    image: owncloud
-  # This is a data container, so we want to exit as soon as the container is created
-  # BUT we will have to fix permissions issues first (33 is the ID of the www-data user)
-    command: /bin/bash -c "/bin/chown -R 33 /var/www/html/data && /bin/chown -R 33 /var/www/html/config"
-    volumes:
-      - /var/www/html/data
-      - /var/www/html/config
+      - "443:443"
+
+########## TASK MANAGING ############
+
+#  kanboard:
+#    build:
+#      context: ./kanboard
+#    ports:
+#     - "90:80"
 
 volumes:
-  db-data:
+ db-data:

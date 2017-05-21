@@ -52,8 +52,8 @@ RUN curl -sSL https://github.com/smicallef/spiderfoot/archive/v$SPIDERFOOT_VERSI
 USER spiderfoot
 WORKDIR /home/spiderfoot
 
-EXPOSE 8080
+EXPOSE 5001
 
 # Run the application.
 ENTRYPOINT ["/usr/bin/python"] 
-CMD ["sf.py", "0.0.0.0:8080"]
+CMD ["sf.py", "0.0.0.0:5001"]
