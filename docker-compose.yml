@@ -17,9 +17,9 @@ services:
       - "6379"
 
 ###########
-#TODO change the git link from pereval to original
-#  intrigue-web: #check
-#    build: https://github.com/pereval-team/intrigue-core.git
+
+#  intrigue-web:
+#    build: https://github.com/intrigueio/intrigue-core.git
 #    ports:
 #      - "83:7777"
 #    links:
@@ -29,54 +29,51 @@ services:
 #      - INTRIGUE_ENV=docker
 #      - REDIS_URI=redis://redis:6379/
 
-  dashboard: #rebind
+#TO TEST
+  intrigue:
+    build:
+      context: ./intrigue
+    ports:
+      - "83:7777"
+
+# fail
+  dashboard:
      build: 
        context: ./pereval-dash
      ports:
-       - "86:86" 
+       - "86:9090" 
 
-#  cyberchef: 
-#    image: mpepping/cyberchef
-#    ports:
-#      - "82:8000"  
+# checked
+  cyberchef:
+    image: mpepping/cyberchef
+    ports:
+      - "82:8000"  
 
+# checked
   openwebspider:
     image: pantyusha/openwebspider
     ports:
       - "81:9999"
 
-  spiderfoot: #check
-    build: 
-       context: ./spiderfoot
-    ports:
-      - "85:5001"
-
-#  wisemapping: #check
-#    image: wisemapping/webapp
+#  spiderfoot:
+#    build: https://github.com/smicallef/spiderfoot.git
 #    ports:
-#      - "84:8080"
+#      - "85:8080"
 
-  etherpad: #check
+# http://localhost:84/wisemapping/c/login
+  wisemapping:
+    image: wisemapping/webapp
+    ports:
+      - "84:8080" # might go overdriven by spiderfoot?
+
+# checked, works after a while
+  etherpad:
     build:
       context: ./etherpad-lite
     ports:
-      - "88:9001"
+      - "89:9001"
 
-########## FILE MANAGING ############
-
-  nextcloud: 
-    build:
-      context: ./nextcloud
-    ports:
-      - "443:443"
-
-########## TASK MANAGING ############
-
-#  kanboard:
-#    build:
-#      context: ./kanboard
-#    ports:
-#     - "90:80"
+# ethercalc - copy from ethercalc/docker-compose.yml
 
 volumes:
- db-data:
+  db-data:
