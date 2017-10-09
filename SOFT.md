@@ -1,4 +1,4 @@
-## The Pereval server
+## The Pereval server: cornflowerblue ed
 
 ### Программное обеспечение
 
@@ -88,7 +88,7 @@
 
 - [wallabag](https://github.com/wallabag/wallabag) ([офсайт](https://wallabag.org/en), [демо - admin/pass](https://www.softaculous.com/softaculous/demos/wallabag)) - удобный сервис для сохранения страниц для последующего чтения. Контент полностью копируется в базе сервиса вместе со стилями и скриптами.
 
-- [Bookmarks](https://github.com/devimust/easy-bookmark-manager) ([демо - admin/nimda](http://bookmarkdemo.miceli.click/)) - простой сервис для хранения закладок на страницы. Поддерживается система тегов с ранжированием, категории, импорт и экспорт.
+- [Shaarli](https://github.com/shaarli/Shaarli) ([демо - demo/demo](https://demo.shaarli.org/)) - простой сервис для хранения закладок на страницы. Поддерживается система тегов,  private links, database export, plugins (wallabag included).
 
 ### Централизация
 
