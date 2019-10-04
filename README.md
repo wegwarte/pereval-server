@@ -20,12 +20,12 @@ _Мотивация_: часто разнообразная деятельнос
 
 Черновик описания проекта смотреть [здесь](https://hackpad.com/ep/pad/static/EoF3ngu7pXM).
 
-## Запуск
+## Запуск для этого форка
 
 1. Установить Docker и Docker Compose
-1. Склонировать репозиторий и развернуть сервер:
+2. Склонировать репозиторий и развернуть сервер:
 ```
-git clone https://github.com/pereval-team/pereval-server.git
+git clone https://github.com/wegwarte/pereval-server.git
 cd pereval-server && sudo docker-compose up --build
 ```
 
@@ -39,10 +39,5 @@ cd pereval-server && sudo docker-compose up --build
 
 ## TODO
 
-- Внести в список наиболее подходящие средства коммуникации
-
-- Проработать вариант единой авторизации через LDAP
-
-- Доработать [pereval-dash](https://github.com/pereval-team/pereval-dash) для отображения базовых сведений по сервисам
-
-- Подумать над средством конфигурации компактного docker-compose файла из набора требуемых сервисов
+- Запилить глагне
+- Запилить аутентификацию
